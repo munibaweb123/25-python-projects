@@ -1,7 +1,7 @@
 import pygame
 import random
 import tkinter as tk
-import tkinter.messagebox
+from tkinter import messagebox
 
 class cube(object):
     rows = 20
@@ -129,12 +129,13 @@ def draw_grid(w, rows, surface):
         pygame.draw.line(surface, (255, 255, 255), (0, y), (w, y))
 
 
-def redraw_window(surface, s, snack, width, rows):
-    surface.fill((0, 0, 0))
-    s.draw(surface)
-    snack.draw(surface)
-    draw_grid(width, rows, surface)
-    pygame.display.update()
+def redraw_window(surface):
+    global rows, width, s, snack
+    surface.fill((0, 0, 0))  # Fill the screen with black
+    s.draw(surface)          # Draw the snake
+    snack.draw(surface)      # Draw the snack
+    draw_grid(width, rows, surface)  # Draw the grid
+    pygame.display.update()  # Update the display
 
 
 def random_snack(rows, item):
@@ -153,7 +154,7 @@ def message_box(subject, content):
     root = tk.Tk()
     root.attributes("-topmost", True)
     root.withdraw()
-    tk.messagebox.showinfo(subject, content)
+    messagebox.showinfo(subject, content)
     try:
         root.destroy()
     except:
@@ -161,9 +162,11 @@ def message_box(subject, content):
 
 
 def main():
+    global width, rows, s, snack
     width = 500
     rows = 20
     win = pygame.display.set_mode((width, width))
+    pygame.display.set_caption('Snake Game')
     s = snake((255, 0, 0), (10, 10))
     snack = cube(random_snack(rows, s), color=(0, 255, 0))
     clock = pygame.time.Clock()
@@ -172,6 +175,7 @@ def main():
     while flag:
         pygame.time.delay(50)
         clock.tick(10)
+
         s.move()
         if s.body[0].pos == snack.pos:
             s.add_cube()
@@ -179,11 +183,12 @@ def main():
         for x in range(len(s.body)):
             if s.body[x].pos in list(map(lambda x:x.pos, s.body[x+1:])):
                 print('Score:', len(s.body))
-                message_box(subject='snake game',content='game over!')
+                message_box(subject='you lost!',content='game over!, play again...')
                 s.reset((10,10))
                 break
 
-        redraw_window(win, s, snack, width, rows)
+        redraw_window(win)
+    
 
 
 main()
