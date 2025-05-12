@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import requests
 import json
 import random
+from keep_alive import keep_alive
 
 # Filepath for the local database
 DB_FILE = "encouragements.json"
@@ -123,4 +124,6 @@ load_dotenv()
 token = os.getenv('TOKEN')
 if not token:
     raise ValueError("The TOKEN environment variable is not set or is empty.")
+
+keep_alive()
 client.run(token)
