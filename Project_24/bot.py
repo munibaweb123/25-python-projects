@@ -69,6 +69,8 @@ async def on_message(message):
 
     # Define options before using it
     options = starter_encouragements + load_encouragements()
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello! How can I help you today?')
 
     if message.content.startswith('$inspire'):
         quote = get_quote()

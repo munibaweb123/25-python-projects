@@ -43,17 +43,27 @@ if __name__ == '__main__':
     while len(sorted_list) < length:
         sorted_list.add(random.randint(-3*length, 3*length))
     sorted_list = sorted(list(sorted_list))
-    # for native search calculate time
-    start = time.time()
-    for target in sorted_list:
-        native_search(sorted_list,target)
-    end = time.time()
-    print('Native search time:',(end - start)/length, "seconds")
-    # for binary search calculate time
-    start = time.time()
-    for target in sorted_list:
-        binary_search(sorted_list,target)
-    end = time.time()
-    print('Binary search time:',(end - start)/length, "seconds")
+
+    print("Choose the type of search:")
+    print("1. Native Search")
+    print("2. Binary Search")
+    choice = input("Enter 1 or 2: ")
+
+    if choice == '1':
+        print("\nPerforming Native Search...")
+        start = time.time()
+        for target in sorted_list:
+            native_search(sorted_list, target)
+        end = time.time()
+        print('Native search time:', (end - start) / length, "seconds")
+    elif choice == '2':
+        print("\nPerforming Binary Search...")
+        start = time.time()
+        for target in sorted_list:
+            binary_search(sorted_list, target)
+        end = time.time()
+        print('Binary search time:', (end - start) / length, "seconds")
+    else:
+        print("\nInvalid choice. Please run the program again and enter 1 or 2.")
 
 

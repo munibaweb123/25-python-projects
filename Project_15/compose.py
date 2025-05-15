@@ -1,5 +1,3 @@
-
-
 import os
 import re
 import string
@@ -56,17 +54,28 @@ def compose(g, words, length=50):
 
 
 def main():
-    words = get_words_from_text('texts/hp_sorcerer_stone.txt')
+    # Prompt the user for the text file path
+    while True:
+        text_path = input("Enter the path to the text file: ")
+        if os.path.isfile(text_path):
+            break
+        print(f"Error: The file '{text_path}' does not exist or is not a valid file. Please try again.")
 
-    # for song in os.listdir('songs/{}'.format(artist)):
-        # if song == '.DS_Store':
-        #     continue
-        # words.extend(get_words_from_text('songs/{artist}/{song}'.format(artist=artist, song=song)))
-        
+    # Process the text file
+    words = get_words_from_text(text_path)
     g = make_graph(words)
-    composition = compose(g, words, 100)
-    print(' '.join(composition))
 
+    # Prompt the user for the length of the composition
+    try:
+        length = int(input("Enter the length of the composition (number of words): "))
+    except ValueError:
+        print("Invalid input. Using default length of 50 words.")
+        length = 50
+
+    # Generate the composition
+    composition = compose(g, words, length)
+    print("\nGenerated Composition:")
+    print(' '.join(composition))
 
 if __name__ == '__main__':
     main()
