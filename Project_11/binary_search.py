@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # target = 12
     # print(native_search(l,target))
     # print(binary_search(l,target))
-    length = 10000
+    length = int(input('Enter length of numbers to search: '))
     sorted_list = set()
     while len(sorted_list) < length:
         sorted_list.add(random.randint(-3*length, 3*length))
